@@ -2,7 +2,7 @@
 
 use App\Http\Middleware\{RateLimiter, is_blocked};
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\{AuthController, WhitelistController};
 
 Route::group(['middleware' => is_blocked::class], function () {
     Route::group(['middleware' => RateLimiter::class], function () {
@@ -10,4 +10,8 @@ Route::group(['middleware' => is_blocked::class], function () {
     });
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::apiResource('/whitelist', WhitelistController::class);
 });
