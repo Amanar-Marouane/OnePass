@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\HttpResponses;
 use App\Models\User;
+use App\Models\UserIP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,10 @@ class AuthController extends Controller
       'password' => Hash::make($validated['password']),
      ]);
 
+     UserIP::create([
+       'user_id' => $user->id,
+       'ip_address' => $request->ip(),
+     ]);
 
      return $this->success($user, "User registered successfully", 201);
     }

@@ -24,6 +24,11 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
+    public function userIP()
+    {
+        return $this->hasMany(UserIP::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
