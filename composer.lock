@@ -1457,6 +1457,7 @@
         },
         {
             "name": "lcobucci/clock",
+
             "version": "3.3.1",
             "source": {
                 "type": "git",
@@ -1472,11 +1473,13 @@
             "require": {
                 "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
                 "psr/clock": "^1.0"
+
             },
             "provide": {
                 "psr/clock-implementation": "1.0"
             },
             "require-dev": {
+
                 "infection/infection": "^0.29",
                 "lcobucci/coding-standard": "^11.1.0",
                 "phpstan/extension-installer": "^1.3.1",
@@ -1485,6 +1488,7 @@
                 "phpstan/phpstan-phpunit": "^1.3.13",
                 "phpstan/phpstan-strict-rules": "^1.5.1",
                 "phpunit/phpunit": "^11.3.6"
+
             },
             "type": "library",
             "autoload": {
@@ -1505,7 +1509,9 @@
             "description": "Yet another clock abstraction",
             "support": {
                 "issues": "https://github.com/lcobucci/clock/issues",
+
                 "source": "https://github.com/lcobucci/clock/tree/3.3.1"
+
             },
             "funding": [
                 {
@@ -1517,6 +1523,7 @@
                     "type": "patreon"
                 }
             ],
+
             "time": "2024-09-24T20:45:14+00:00"
         },
         {
@@ -1556,6 +1563,7 @@
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
+
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -1579,7 +1587,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
+
                 "source": "https://github.com/lcobucci/jwt/tree/4.3.0"
+
             },
             "funding": [
                 {
@@ -1591,7 +1601,9 @@
                     "type": "patreon"
                 }
             ],
+
             "time": "2023-01-02T13:28:00+00:00"
+
         },
         {
             "name": "league/commonmark",
@@ -3423,6 +3435,53 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "stella-maris/clock",
+            "version": "0.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stella-maris-solutions/clock.git",
+                "reference": "fa23ce16019289a18bb3446fdecd45befcdd94f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stella-maris-solutions/clock/zipball/fa23ce16019289a18bb3446fdecd45befcdd94f8",
+                "reference": "fa23ce16019289a18bb3446fdecd45befcdd94f8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0",
+                "psr/clock": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StellaMaris\\Clock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Heigl",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A pre-release of the proposed PSR-20 Clock-Interface",
+            "homepage": "https://gitlab.com/stella-maris/clock",
+            "keywords": [
+                "clock",
+                "datetime",
+                "point in time",
+                "psr20"
+            ],
+            "support": {
+                "source": "https://github.com/stella-maris-solutions/clock/tree/0.1.7"
+            },
+            "time": "2022-11-25T16:15:06+00:00"
         },
         {
             "name": "symfony/clock",
