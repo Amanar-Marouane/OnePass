@@ -1,16 +1,13 @@
 <?php
 
-use App\Http\Middleware\RateLimiter;
+use App\Http\Middleware\{RateLimiter, is_blocked};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-
-Route::group(['middleware' => RateLimiter::class], function () {
-    Route::get('/test', function () {
-        return 'this';
+Route::group(['middleware' => is_blocked::class], function () {
+    Route::group(['middleware' => RateLimiter::class], function () {
+        Route::post('/login', [AuthController::class, 'login'])->middleware('detect-new-device');
     });
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 });
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login'])->middleware('detect-new-device');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
