@@ -25,7 +25,7 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
-
+        
         Device::create([
             'user_id' => $user->id,
             'mac_address' => Device::getMacAddress(),
