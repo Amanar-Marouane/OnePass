@@ -5,7 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => RateLimiter::class], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', [App\Http\Controllers\test::class, 'index']);
 });
