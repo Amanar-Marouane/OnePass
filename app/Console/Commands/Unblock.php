@@ -21,13 +21,14 @@ class Unblock extends Command
      * @var string
      */
     protected $description = 'Unblock Certain User Based On Param Id';
-
+    private $block_duration;
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $blockedIps = Block::where('created_at', '<=', now()->subMinute())->get();
+        $this->block_duration = (int) env('BLOCK_DURATION');
+        $blockedIps = Block::where('created_at', '<=', now()->subHours($this->block_duration))->get();
 
         foreach ($blockedIps as $block) {
             cache()->forget("blocked_ip:{$block->ip}");
