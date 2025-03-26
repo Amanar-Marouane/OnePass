@@ -2,7 +2,7 @@
 
 use App\Http\Middleware\{RateLimiter, is_blocked};
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, WhitelistController};
+use App\Http\Controllers\{AuthController, WhitelistController, PasswordController};
 
 Route::group(['middleware' => is_blocked::class], function () {
     Route::group(['middleware' => RateLimiter::class], function () {
