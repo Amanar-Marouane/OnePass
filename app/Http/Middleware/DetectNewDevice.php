@@ -17,8 +17,7 @@ class DetectNewDevice
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
-            // $macAddress = Device::getMacAddress();
-            $macAddress = $request->input('mac_address');
+            $macAddress = Device::getMacAddress();
 
             $existingDevice = Device::where('user_id', $user->id)
                 ->where('mac_address', $macAddress)
