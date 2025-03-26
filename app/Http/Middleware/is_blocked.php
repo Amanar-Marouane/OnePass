@@ -19,13 +19,12 @@ class is_blocked
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $access_token = $request->cookie('access_token');
-        $user = JWTAuth::setToken($access_token)->authenticate();
+        $ip = $request->ip();
 
-        $is_blocked = Block::where('user_id', $user->id)->first();
+        $is_blocked = Block::where('ip', $ip)->first();
         if ($is_blocked) {
-            $waiting_until_resolve = $is_blocked->created_at->addHour();
-            return $this->error('Your account is temporarily blocked. You will regain access on ' . $waiting_until_resolve . '.', 403);
+            $waiting_until_resolve = $is_blocked->created_at->addMinutes((int)env('BLOCK_DURATION') * 60);
+            return $this->error('Your ip is temporarily blocked. You will regain access on ' . $waiting_until_resolve . '.', 403);
         }
 
         return $next($request);
