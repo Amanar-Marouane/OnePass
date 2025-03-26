@@ -6,6 +6,8 @@ use Closure;
 use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DetectNewMacAddress;
 
 class DetectNewDevice
 {
@@ -15,7 +17,8 @@ class DetectNewDevice
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
-            $macAddress = Device::getMacAddress();
+            // $macAddress = Device::getMacAddress();
+            $macAddress = $request->input('mac_address');
 
             $existingDevice = Device::where('user_id', $user->id)
                 ->where('mac_address', $macAddress)
@@ -28,10 +31,14 @@ class DetectNewDevice
                     'is_verified' => "false"
                 ]);
 
+                Mail::to($user->email)->send(new DetectNewMacAddress());
                 return response()->json([
                     'message' => 'New device detected. Please verify your device.',
                     'verify' => true
                 ], 403);
+
+
+                logger($user->email . ' has logged in from a new device');
             }
         }
 
