@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{User, Device};
+use App\Models\{User, Device, LoginActivity};
 use App\HttpResponses;
+use App\Mail\DetectNewIpAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -25,7 +27,12 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
-
+       
+        LoginActivity::create([
+         'user_id' => $user->id,
+         'user_ip' => $request->ip(),
+        ]);
+ 
         Device::create([
             'user_id' => $user->id,
             'mac_address' => Device::getMacAddress(),
@@ -46,6 +53,25 @@ class AuthController extends Controller
         if (!$token = Auth::attempt($credentials)) {
             return $this->error('Unauthorized', 401, ['access_token' => $token]);
         }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Auth::attempt($request->only('email', 'password'))) {
+            return $this->error('Unauthorized', 401);
+        }
+    
+        $storedIp = LoginActivity::where('user_id', $user->id)->latest()->value('user_ip');
+        $isVerified = Device::where('user_id', $user->id)->latest()->value('is_verified');
+
+        if ($isVerified == 'false' && $storedIp != $request->ip()) {
+            $verificationCode = rand(100000, 999999);
+         Mail::to($user->email)->send(new DetectNewIpAddress($user, $request->ip(), $verificationCode));
+         
+         return $this->error('Your IP address does not match to your stored IP.', 403);
+        }
+
+       
+        
         $user = Auth::user();
         return $this->success($user, "User logged in successfully", 200, ['access_token' => $token]);
     }
