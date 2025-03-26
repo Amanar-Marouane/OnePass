@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\WhiteList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class WhitelistController extends Controller
 {

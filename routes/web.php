@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WhitelistController;
 use App\Http\Middleware\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordController;
