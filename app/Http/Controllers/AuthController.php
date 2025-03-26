@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\{User, Device};
 use App\HttpResponses;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,10 +31,6 @@ class AuthController extends Controller
             'mac_address' => Device::getMacAddress(),
             'is_verified' => "false",
         ]);
-     UserIP::create([
-       'user_id' => $user->id,
-       'ip_address' => $request->ip(),
-     ]);
 
         return $this->success($user, "User registered successfully", 201);
     }
@@ -45,7 +40,6 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
-            'mac_address' => 'required|string'
         ]);
         $credentials = $request->only('email', 'password');
 
